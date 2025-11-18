@@ -1,0 +1,47 @@
+# Example Organic Material Card 
+
+# mat_type: int (1 (Organic) or 2 (Inorganic))
+# Specifies whether the material is Organic or Inorganic
+mat_type = 1
+
+[calibration]
+# photon: [double A, double B]
+# Linear constants for photon collision in the form Ax+B
+photon = [1.00, 0.000]
+# carbon: double
+# Multiplicative constant for neutron collision on carbon 
+carbon = 0.02
+
+[calibration.birks]
+# stopping_power: file_path
+# File path for stopping power table for material
+# 0.958 g/cm^3 based on atom densities quote in https://eljentechnology.com/images/products/data_sheets/EJ-301_EJ-309.pdf
+# 5.43:4.35 H:C ratio in https://eljentechnology.com/images/products/data_sheets/EJ-301_EJ-309.pdf
+stopping_power = "EJ309.txt" 
+# S: double
+# Scintillation efficiency for material and geometry
+# Values for pulse height (MeVee) as a function of neutron energy deposition
+# from http://dx.doi.org/10.1016/j.nima.2016.10.035 
+S = 2.277
+# kB: double
+# Birks' coefficient for material and geometry
+kB = 33.84
+
+[pulse_creation]
+# pgt: double
+# Pulse generation time for a detector of this card, in nanoseconds
+pgt = 10.0
+# dt: double
+# Deadtime for a detector of this card, in nanoseconds
+dt = 0.0
+
+[resolution]
+# time: double
+# Standard deviation for gaussian transformation of pulse time, in nanoseconds
+time = 0.5
+# energy.photon: [double A, double B, double C]
+# Constants for gaussian energy broadening of photon pulses in the form Ax+B*SQRT(x)+C
+energy.photon = [2.7, 129.6, 500.0]
+# energy.neutron: [double A, double B, double C]
+# Constants for gaussian energy broadening of neutron pulses in the form Ax+B*SQRT(x)+C
+energy.neutron = [2.7, 129.6, 500.0]

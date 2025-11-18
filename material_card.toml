@@ -22,10 +22,10 @@ stopping_power = "EJ309.txt"
 # Scintillation efficiency for material and geometry
 # Values for pulse height (MeVee) as a function of neutron energy deposition
 # from http://dx.doi.org/10.1016/j.nima.2016.10.035 
-S = 2.277
+S = 2.277 # MeVee/MeV
 # kB: double
 # Birks' coefficient for material and geometry
-kB = 33.84
+kB = 33.84 # (mg/cm^2)/MeV
 
 [pulse_creation]
 # pgt: double

@@ -58,8 +58,8 @@ def plot_energy_and_light():
     ax1.set_yscale('log')
     ax1.legend()
 
-    # Add Total Counts text to top right of the plot area
-    count_text_1 = f"Total Counts: {len(energy_data)}"
+    # Add Total Collisions text to top right of the plot area
+    count_text_1 = f"Total Collisions: {len(energy_data)}"
     ax1.text(0.95, 0.95, count_text_1,
              transform=ax1.transAxes,
              horizontalalignment='right',
@@ -73,8 +73,8 @@ def plot_energy_and_light():
     ax2.set_ylabel('Counts')
     ax2.set_yscale('log')
 
-    # Add Total Counts text to top right of the plot area
-    count_text_2 = f"Total Counts: {len(light_data)}"
+    # Add Total Pulses text to top right of the plot area
+    count_text_2 = f"Total Pulses: {len(light_data)}"
     ax2.text(0.95, 0.95, count_text_2,
              transform=ax2.transAxes,
              horizontalalignment='right',

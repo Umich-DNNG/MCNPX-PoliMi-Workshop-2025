@@ -30,7 +30,7 @@ kB = 33.84
 [pulse_creation]
 # pgt: double
 # Pulse generation time for a detector of this card, in nanoseconds
-pgt = 10.0
+pgt = 400.0
 # dt: double
 # Deadtime for a detector of this card, in nanoseconds
 dt = 0.0

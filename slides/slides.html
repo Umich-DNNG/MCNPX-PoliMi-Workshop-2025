@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modeling Neutron Response in EJ-309</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Merriweather:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* 1. THE SETUP */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #e2e8f0;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr;
+            margin: 0;
+            min-height: 100vh;
+            padding: 20px 0;
+            place-items: center;
+        }
+
+        .slide-container {
+            align-items: center;
+            background-color: #F3F0DF; /* Cream Background */
+            border-radius: 0px; /* Sharp corners for academic look */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            height: 720px;
+            justify-content: center;
+            overflow: hidden;
+            padding: 40px; /* Reduced padding for more space */
+            position: relative;
+            width: 1280px;
+        }
+
+        /* Dark Blue Accent Bar */
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-color: #002147;
+            z-index: 10;
+        }
+
+        .slide-container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 2. TYPOGRAPHY - Academic Style */
+        .slide-container h1,
+        .slide-container h2,
+        .slide-container h3 {
+            color: #002147; /* Deep Blue */
+            font-family: 'Merriweather', serif;
+            margin: 0;
+        }
+
+        .slide-container p,
+        .slide-container li,
+        .slide-container .subtitle,
+        .slide-container td,
+        .slide-container th {
+            color: #333;
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1.5;
+        }
+
+        .slide-container h1 {
+            font-size: 60px; /* Slightly smaller to fit comfortably */
+            font-weight: 900;
+            margin-bottom: 20px;
+        }
+
+        .slide-container .slide-title {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 20px; /* Reduced margin */
+            width: 100%;
+            text-align: left;
+            border-bottom: 2px solid #D4AF37; /* Gold Accent */
+            padding-bottom: 10px;
+        }
+
+        .slide-container h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #002147;
+        }
+
+        .slide-container p,
+        .slide-container li {
+            font-size: 18px; /* Adjusted for density */
+        }
+
+        .slide-container .subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            color: #555;
+            font-style: italic;
+        }
+
+        .slide-container .content-area {
+            align-items: center;
+            display: flex;
+            flex-grow: 1;
+            justify-content: center;
+            width: 100%;
+            height: 100%; /* Ensure it fills vertical space */
+        }
+
+        /* 3. LAYOUTS */
+
+        /* Title Slide */
+        .title-layout {
+            text-align: center;
+            border: 4px double #002147;
+            padding: 60px;
+            background-color: #fff;
+        }
+
+        /* Two Column */
+        .two-column {
+            align-items: center; /* Center vertically */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .two-column ul {
+            list-style: square; /* Academic bullet style */
+            padding-left: 25px;
+        }
+        
+        .two-column li {
+            margin-bottom: 10px;
+        }
+
+        /* Two Column Tiled */
+        .two-column.tiled {
+            align-items: stretch;
+        }
+
+        .two-column.tiled > div {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        /* Image Styles - HD Updates */
+        .image-wrapper {
+            height: 540px; /* Significantly taller for HD feel */
+            width: 100%;
+            background: transparent; /* Removed white box */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .image-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            /* Ensure high quality rendering */
+            image-rendering: -webkit-optimize-contrast; 
+        }
+
+        /* Tiled Icons */
+        .tiled-content {
+            display: flex;
+            gap: 30px;
+            width: 100%;
+            justify-content: space-between;
+        }
+
+        .tile {
+            flex: 1;
+            background-color: #fff;
+            padding: 30px;
+            text-align: center;
+            border-top: 5px solid #002147;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .tile .icon {
+            font-size: 50px;
+            color: #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        /* Formulas */
+        #formula-container {
+            font-family: 'Merriweather', serif;
+            font-style: italic;
+            background: #fff;
+            padding: 15px;
+            border-left: 4px solid #002147;
+            margin: 20px 0;
+        }
+
+        /* Citation Style */
+        .citation {
+            position: absolute;
+            bottom: 15px;
+            right: 40px;
+            font-size: 12px;
+            color: #555;
+            font-style: italic;
+            background-color: rgba(243, 240, 223, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            max-width: 80%;
+            text-align: right;
+            z-index: 20;
+        }
+
+        .citation a {
+            color: #002147;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide-container" id="slide1">
+    <div class="title-layout">
+        <h1>Modeling Neutron Response in EJ-309</h1>
+        <p class="subtitle">Theory and Implementation using MCNPX-PoliMi</p>
+        <div style="margin-top: 40px; font-weight: 700; color: #002147;">
+            <p>Flynn Darby</p>
+            <p style="font-size: 18px;">MCNPX-PoliMi Workshop 2025</p>
+            <p style="font-size: 16px; font-weight: 400; margin-top: 20px;">Based on research by Norsworthy et al., NIMA 842 (2017)</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 2: Introduction -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">The Challenge of Low-Energy Extrapolation</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>Standard Practice</h3>
+                <p>Organic scintillators like EJ-309 are standard for fast neutron detection in safeguards and physics. Accurate simulation requires a precise understanding of the non-linear light output function, <math><mi>L</mi><mo>(</mo><mi>E</mi><mo>)</mo></math>.</p>
+            </div>
+            <div>
+                <h3>The Problem</h3>
+                <p>Most empirical models (polynomials, simple exponentials) fit high-energy data well but diverge significantly when extrapolating to low energies (< 100 keV). This leads to errors in simulated efficiency and threshold calculations.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 3: Simulation Setup (Image 1) -->
+<div class="slide-container" id="slide3">
+    <h2 class="slide-title">Simulation Geometry</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <img src="1.png" alt="Image 1: MCNPX-PoliMi simulation geometry showing detector and source setup">
+                </div>
+            </div>
+            <div>
+                <h3>MCNPX-PoliMi Configuration</h3>
+                <ul>
+                    <li><strong>Source:</strong> Cf-252 spontaneous fission source.</li>
+                    <li><strong>Distance:</strong> Placed approximately 116 cm from the detector face.</li>
+                    <li><strong>Detector:</strong> Cylindrical EJ-309 liquid scintillator (12.7 cm diameter x 12.7 cm thickness).</li>
+                    <li><strong>Code:</strong> MCNPX-PoliMi tracks individual collision events, enabling the application of non-linear light output to multiple scatter events.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="citation">
+        Experimental setup modeled from: M.A. Norsworthy et al., <a href="https://doi.org/10.1016/j.nima.2016.10.035">NIMA 842 (2017) 20-27</a>
+    </div>
+</div>
+
+<!-- Slide 4: Model Divergence (Image 2) -->
+<div class="slide-container" id="slide4">
+    <h2 class="slide-title">Divergence of Models</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Comparison of Fits</h3>
+                <p>While all models fit the measured high-energy data points (red crosses), they differ wildly below 100 keV.</p>
+                <p>The "Exponential 2" model drops off too rapidly, leading to underestimation of low-energy events. The Birks and Voltz models follow a more physical S-shape, grounded in stopping power theory.</p>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="2.png" alt="Image 2: Plot showing divergence of different light output models at low energy">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="citation">
+        Fig 2. Adapted from M.A. Norsworthy et al., "Evaluation of neutron light output response functions in EJ-309 organic scintillators", <a href="https://doi.org/10.1016/j.nima.2016.10.035">NIMA 842 (2017) 20-27</a>
+    </div>
+</div>
+
+<!-- Slide 5: SRIM Input (Image 3) -->
+<div class="slide-container" id="slide5">
+    <h2 class="slide-title">Physics Setup: SRIM Input</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Defining Material Properties</h3>
+                <p>To accurately model quenching, we must first calculate the stopping power (<math><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi></math>) of the scintillator material.</p>
+                <ul>
+                    <li><strong>Software:</strong> SRIM (Stopping and Range of Ions in Matter).</li>
+                    <li><strong>Target:</strong> EJ-309 (H:C ratio ~ 1.25).</li>
+                    <li><strong>Density:</strong> 0.959 g/cm³.</li>
+                    <li><strong>Ion:</strong> Hydrogen (Recoil Protons).</li>
+                </ul>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="3.jpg" alt="Image 3: SRIM Input Window showing Hydrogen and Carbon targets">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 6: SRIM Output (Image 4) -->
+<div class="slide-container" id="slide6">
+    <h2 class="slide-title">Physics Data: Stopping Power</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <img src="4.png" alt="Image 4: SRIM Output Table showing dE/dx values">
+                </div>
+            </div>
+            <div>
+                <h3>Integration into Code</h3>
+                <p>The output table provides Electronic and Nuclear stopping powers in MeV/(mg/cm²).</p>
+                <div id="formula-container">
+                    <math display="block">
+                        <mi>L</mi><mo>(</mo><mi>E</mi><mo>)</mo>
+                        <mo>=</mo>
+                        <mo>&#x222B;</mo>
+                        <mfrac>
+                            <mrow><mi>S</mi><mo>&#x22C5;</mo><mi>d</mi><mi>E</mi></mrow>
+                            <mrow><mn>1</mn><mo>+</mo><mi>k</mi><mi>B</mi><mo>&#x22C5;</mo><mo>(</mo><mi>d</mi><mi>E</mi><mo>/</mo><mi>d</mi><mi>x</mi><mo>)</mo></mrow>
+                        </mfrac>
+                    </math>
+                </div>
+                <p>These values are exported to <code>EJ309.txt</code> and read by the post-processor to calculate light yield dynamically for every collision event.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 7: PSD Methodology (Image 5) -->
+<div class="slide-container" id="slide7">
+    <h2 class="slide-title">Experimental Validation (PSD)</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <div class="image-wrapper">
+                    <img src="5.png" alt="Image 5: Pulse Shape Discrimination 2D histogram showing separation of neutrons and gammas">
+                </div>
+            </div>
+            <div>
+                <h3>Isolating the Neutron Signal</h3>
+                <p>We employ Charge-Integration Pulse Shape Discrimination (PSD) to separate neutrons from gamma rays.</p>
+                <ul>
+                    <li><strong>Upper Band:</strong> Neutrons (characterized by a larger tail integral).</li>
+                    <li><strong>Lower Band:</strong> Photons (smaller tail integral).</li>
+                    <li><strong>Analysis:</strong> Only pulses falling above the red discrimination line are compared against the simulation.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="citation">
+        Fig 3. Measurement data from M.A. Norsworthy et al., <a href="https://doi.org/10.1016/j.nima.2016.10.035">NIMA 842 (2017) 20-27</a>
+    </div>
+</div>
+
+<!-- Slide 8: Results Comparison (Image 6) -->
+<div class="slide-container" id="slide8">
+    <h2 class="slide-title">Simulation vs. Experiment</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                <h3>Fractional Difference</h3>
+                <p>We compared the fractional difference <math><mo>(</mo><mi>S</mi><mo>-</mo><mi>M</mi><mo>)</mo><mo>/</mo><mi>M</mi></math> between Simulated and Measured Pulse Height Distributions (PHDs).</p>
+                <p>Exponential models show significant under-prediction (up to 30% error) at low energies. The <strong>Birks model</strong> (red line) provides the best performance, with bin-by-bin agreement better than 5% over the range 0.08–2.18 MeVee.</p>
+            </div>
+            <div>
+                <div class="image-wrapper">
+                    <img src="6.png" alt="Image 6: Plot of fractional difference between simulated and measured pulse height distributions">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="citation">
+        Fig 5. M.A. Norsworthy et al., "Evaluation of neutron light output response functions in EJ-309 organic scintillators", <a href="https://doi.org/10.1016/j.nima.2016.10.035">NIMA 842 (2017) 20-27</a>
+    </div>
+</div>
+
+<!-- Slide 9: Demo Results (Image 7) -->
+<div class="slide-container" id="slide9">
+    <h2 class="slide-title">Data Visualization</h2>
+    <div class="content-area">
+        <div class="two-column">
+            <div>
+                 <h3>Energy vs. Light</h3>
+                <p>The raw energy deposition spectrum (Left) shows the continuous distribution of proton recoils. This represents the true energy deposited in the detector volume.</p>
+                <p>The Pulse Height Distribution (Right) is "compressed" due to non-linear quenching, most pronounced at low energies.</p>
+            </div>
+             <div>
+                <div class="image-wrapper">
+                    <img src="7.png" alt="Image 7: Side by side histograms of Energy Deposition vs Light Output">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Slide 10: Implementation Workflow -->
+<div class="slide-container" id="slide10">
+    <h2 class="slide-title">Practical Implementation</h2>
+    <div class="content-area">
+        <div class="tiled-content">
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-terminal"></i></div>
+                <h3>Step 1: Simulation</h3>
+                <p>Run MCNPX-PoliMi with the specific input deck (<code>EJ309.i</code>) to generate the collision dump file.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-file-code"></i></div>
+                <h3>Step 2: Config</h3>
+                <p>Define material properties in <code>input_config.toml</code>. Set <code>kB = 33.84</code> and <code>S = 2.277</code>.</p>
+            </div>
+            <div class="tile">
+                <div class="icon"><i class="fa-solid fa-chart-line"></i></div>
+                <h3>Step 3: Post-Process</h3>
+                <p>Run <code>pyMPPost</code>. The code reads the collision file, applies the Birks function, and generates the final PHD.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

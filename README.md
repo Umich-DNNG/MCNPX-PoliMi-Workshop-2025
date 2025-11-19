@@ -13,7 +13,7 @@ Before starting, ensure you have Python installed on your system.
 
 ## 2. Installing pyMPPost
 
-Install the `pyMPPost` package directly from PyPI using pip:
+Install the [`pyMPPost`](https://gitlab.eecs.umich.edu/umich-dnng/pymppost) package directly from PyPI using pip:
 
 ```bash
 pip install pyMPPost

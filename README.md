@@ -1,6 +1,6 @@
 # MCNPX-PoliMi Simulation and Analysis Workflow
 
-This guide outlines the steps to set up your environment, run an MCNPX-PoliMi simulation, post-process the data using `pyMPPost`, and visualize the results using a custom Python script.
+This guide outlines the steps to set up your environment, run an MCNPX-PoliMi simulation, post-process the data using [pyMPPost](https://gitlab.eecs.umich.edu/umich-dnng/pymppost), and visualize the results using a custom Python script.
 
 ## 1. Installing Python
 

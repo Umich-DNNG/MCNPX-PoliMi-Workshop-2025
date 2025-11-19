@@ -32,10 +32,10 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
             display: flex;
             flex-direction: column;
-            height: 720px;
+            height: 720px; /* Reverted to standard height */
             justify-content: center;
             overflow: hidden;
-            padding: 40px; /* Reduced padding for more space */
+            padding: 60px; /* Reverted to standard padding */
             position: relative;
             width: 1280px;
         }
@@ -73,23 +73,23 @@
         .slide-container th {
             color: #333;
             font-family: 'DM Sans', sans-serif;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .slide-container h1 {
-            font-size: 60px; /* Slightly smaller to fit comfortably */
+            font-size: 68px; /* Reverted size */
             font-weight: 900;
             margin-bottom: 20px;
         }
 
         .slide-container .slide-title {
-            font-size: 42px;
+            font-size: 48px; /* Reverted size */
             font-weight: 700;
-            margin-bottom: 20px; /* Reduced margin */
+            margin-bottom: 40px;
             width: 100%;
             text-align: left;
             border-bottom: 2px solid #D4AF37; /* Gold Accent */
-            padding-bottom: 10px;
+            padding-bottom: 15px;
         }
 
         .slide-container h3 {
@@ -101,7 +101,7 @@
 
         .slide-container p,
         .slide-container li {
-            font-size: 18px; /* Adjusted for density */
+            font-size: 20px; /* Reverted size */
         }
 
         .slide-container .subtitle {
@@ -117,7 +117,6 @@
             flex-grow: 1;
             justify-content: center;
             width: 100%;
-            height: 100%; /* Ensure it fills vertical space */
         }
 
         /* 3. LAYOUTS */
@@ -132,12 +131,11 @@
 
         /* Two Column */
         .two-column {
-            align-items: center; /* Center vertically */
+            align-items: flex-start;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
+            gap: 60px;
             width: 100%;
-            height: 100%;
         }
 
         .two-column ul {
@@ -146,7 +144,7 @@
         }
         
         .two-column li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         /* Two Column Tiled */
@@ -161,11 +159,11 @@
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
 
-        /* Image Styles - HD Updates */
+        /* Image Styles */
         .image-wrapper {
-            height: 540px; /* Significantly taller for HD feel */
+            height: 400px; /* Reverted to fit 720px height */
             width: 100%;
-            background: transparent; /* Removed white box */
+            background: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -176,8 +174,7 @@
             max-width: 100%;
             max-height: 100%;
             object-fit: contain;
-            /* Ensure high quality rendering */
-            image-rendering: -webkit-optimize-contrast; 
+            image-rendering: -webkit-optimize-contrast;
         }
 
         /* Tiled Icons */
@@ -216,18 +213,17 @@
         /* Citation Style */
         .citation {
             position: absolute;
-            bottom: 15px;
-            right: 40px;
-            font-size: 12px;
+            bottom: 20px;
+            right: 60px;
+            font-size: 14px;
             color: #555;
             font-style: italic;
             background-color: rgba(243, 240, 223, 0.9);
-            padding: 5px 10px;
+            padding: 8px 12px;
             border-radius: 4px;
             border: 1px solid #ccc;
             max-width: 80%;
             text-align: right;
-            z-index: 20;
         }
 
         .citation a {
@@ -249,23 +245,6 @@
             <p>Flynn Darby</p>
             <p style="font-size: 18px;">MCNPX-PoliMi Workshop 2025</p>
             <p style="font-size: 16px; font-weight: 400; margin-top: 20px;">Based on research by Norsworthy et al., NIMA 842 (2017)</p>
-        </div>
-    </div>
-</div>
-
-<!-- Slide 2: Introduction -->
-<div class="slide-container" id="slide2">
-    <h2 class="slide-title">The Challenge of Low-Energy Extrapolation</h2>
-    <div class="content-area">
-        <div class="two-column tiled">
-            <div>
-                <h3>Standard Practice</h3>
-                <p>Organic scintillators like EJ-309 are standard for fast neutron detection in safeguards and physics. Accurate simulation requires a precise understanding of the non-linear light output function, <math><mi>L</mi><mo>(</mo><mi>E</mi><mo>)</mo></math>.</p>
-            </div>
-            <div>
-                <h3>The Problem</h3>
-                <p>Most empirical models (polynomials, simple exponentials) fit high-energy data well but diverge significantly when extrapolating to low energies (< 100 keV). This leads to errors in simulated efficiency and threshold calculations.</p>
-            </div>
         </div>
     </div>
 </div>
@@ -293,6 +272,23 @@
     </div>
     <div class="citation">
         Experimental setup modeled from: M.A. Norsworthy et al., <a href="https://doi.org/10.1016/j.nima.2016.10.035">NIMA 842 (2017) 20-27</a>
+    </div>
+</div>
+
+<!-- Slide 2: Introduction -->
+<div class="slide-container" id="slide2">
+    <h2 class="slide-title">The Challenge of Low-Energy Extrapolation</h2>
+    <div class="content-area">
+        <div class="two-column tiled">
+            <div>
+                <h3>Standard Practice</h3>
+                <p>Organic scintillators like EJ-309 are standard for fast neutron detection in safeguards and physics. Accurate simulation requires a precise understanding of the non-linear light output function, <math><mi>L</mi><mo>(</mo><mi>E</mi><mo>)</mo></math>.</p>
+            </div>
+            <div>
+                <h3>The Problem</h3>
+                <p>Most empirical models (polynomials, simple exponentials) fit high-energy data well but diverge significantly when extrapolating to low energies (< 100 keV). This leads to errors in simulated efficiency and threshold calculations.</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -423,18 +419,13 @@
 <!-- Slide 9: Demo Results (Image 7) -->
 <div class="slide-container" id="slide9">
     <h2 class="slide-title">Data Visualization</h2>
-    <div class="content-area">
-        <div class="two-column">
-            <div>
-                 <h3>Energy vs. Light</h3>
-                <p>The raw energy deposition spectrum (Left) shows the continuous distribution of proton recoils. This represents the true energy deposited in the detector volume.</p>
-                <p>The Pulse Height Distribution (Right) is "compressed" due to non-linear quenching, most pronounced at low energies.</p>
-            </div>
-             <div>
-                <div class="image-wrapper">
-                    <img src="7.png" alt="Image 7: Side by side histograms of Energy Deposition vs Light Output">
-                </div>
-            </div>
+    <div class="content-area" style="flex-direction: column; align-items: flex-start;">
+        <div style="width: 100%; margin-bottom: 10px;">
+             <h3>Energy vs. Light</h3>
+            <p>The raw energy deposition spectrum (Left) shows the continuous distribution, while the Pulse Height Distribution (Right) is "compressed" due to non-linear quenching.</p>
+        </div>
+         <div class="image-wrapper" style="width: 70%; height: auto;">
+            <img src="7.png" alt="Image 7: Side by side histograms of Energy Deposition vs Light Output" style="width: 100%; height: 100%; object-fit: contain;">
         </div>
     </div>
 </div>
